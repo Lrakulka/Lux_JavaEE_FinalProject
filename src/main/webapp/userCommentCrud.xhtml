@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="./template.xhtml">
+    <ui:define name="content">
+        <h:form id="formTblUserComment">
+            <p:dataTable id="tblUserComment" widgetVar="tblUserComment" var="userComment" value="#{userCommentFacade.getAllForUser(sessionData.loggedUser)}"
+            rendered="#{not empty sessionData.loggedUser}">
+                <p:column style="width:66px;" exportable="false">
+                    <f:facet name="header">
+                        <p:commandButton icon="ui-icon-plus" title="Ajouter"
+                                         action="#{userCommentCrudBean.startNewEntity}"
+                                         update="popupUserComment" oncomplete="PF('popupUserComment').show()"/>
+                    </f:facet>
+                    <p:commandButton icon="ui-icon-pencil" title="&Eacute;diter"
+                                     action="#{userCommentCrudBean.startEditEntity(userComment.myClone)}"
+                                     update="popupUserComment" oncomplete="PF('popupUserComment').show()"/>
+                    <p:commandButton icon="ui-icon-trash" title="Supprimer"
+                                     action="#{userCommentCrudBean.startDelete(userComment)}"
+                                     update="popupUserComment" oncomplete="PF('popupUserComment').show()"/>
+                </p:column>
+                <p:column headerText="Comment" sortBy="#{userComment.comment}">
+                    <h:outputText value="#{userComment.comment}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <ui:include src="userCommentCrudPopup.xhtml"/>
+    </ui:define>
+</ui:composition>
+</html>
