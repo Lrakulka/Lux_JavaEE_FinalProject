@@ -1,4 +1,4 @@
-package entity;
+package ejb.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,7 +25,7 @@ public class User extends AbstractDBObject {
         this.reservedTracks = reservedTracks;
     }
 
-    @OneToMany(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
+    @OneToMany(cascade= CascadeType.ALL, fetch=FetchType.EAGER)
     public List<Track> getTracks() {
         return tracks;
     }

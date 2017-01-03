@@ -1,4 +1,4 @@
-package entity;
+package ejb.entity;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
@@ -13,6 +13,7 @@ import java.util.Date;
 
 /**
  * Schuller Tom
+ * modified by Oleksandr Borysov
  */
 @MappedSuperclass
 public abstract class AbstractDBObject implements Serializable {

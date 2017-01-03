@@ -1,10 +1,10 @@
-package entity;
+package ejb.entity;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by set on 03.01.17.
+ * Created by Oleksandr Borysov  on 03.01.17.
  */
 @Entity
 public class Track extends AbstractDBObject {
@@ -13,7 +13,17 @@ public class Track extends AbstractDBObject {
     private String startLocation;
     private String stopLocation;
     private Integer maxCompanions;
+    private Integer freePlaces;
     private List<User> companions;
+
+    @Column(name = "freePlaces")
+    public Integer getFreePlaces() {
+        return freePlaces;
+    }
+
+    public void setFreePlaces(Integer freePlaces) {
+        this.freePlaces = freePlaces;
+    }
 
     @Column(name = "name")
     public String getName() {

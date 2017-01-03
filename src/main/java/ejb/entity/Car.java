@@ -1,9 +1,9 @@
-package entity;
+package ejb.entity;
 
 import javax.persistence.*;
 
 /**
- * Created by set on 03.01.17.
+ * Created by Oleksandr Borysov on 03.01.17.
  */
 @Entity
 public class Car extends AbstractDBObject {

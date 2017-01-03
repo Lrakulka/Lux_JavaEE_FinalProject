@@ -2,15 +2,55 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="template.xhtml">
     <ui:define name="content">
         <h:form id="formLogin">
             <h:panelGrid columns="3">
+                <h:outputLabel for="name" value="Username"/>
+                <h:inputText id="name" value="#{loginModel.username}" required="true"/>
+                <h:message for="name"/>
+                <h:outputLabel for="password" value="Password"/>
+                <h:inputSecret id="password" value="#{loginModel.password}" required="true"/>
+                <h:message for="password"/>
+                <h:outputText/>
+                <h:commandButton id="btLogin" value="Login" action="#{loginAction.login}" update="formLogin"/>
             </h:panelGrid>
             <h:messages/>
         </h:form>
+        <h2>Hello. This information could be useful for you.</h2>
+        <table>
+            <tr>
+                <td>Login</td>
+                <td>Password</td>
+                <td>Admin(yes/no)</td>
+            </tr>
+            <tr>
+                <td>admin</td>
+                <td>admin1</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>admin1</td>
+                <td>admin1</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>user</td>
+                <td>user1</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>user1</td>
+                <td>user1</td>
+                <td>No</td>
+            </tr>
+        </table>
+        <h3>Rest-Service urls</h3>
+        <!--Write URLs for services-->
+
     </ui:define>
 </ui:composition>
 </html>

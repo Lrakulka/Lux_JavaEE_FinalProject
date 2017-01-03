@@ -1,8 +1,8 @@
-package initializer;
+package utils;
 
-import entity.Car;
-import entity.Track;
-import entity.User;
+import ejb.entity.Car;
+import ejb.entity.Track;
+import ejb.entity.User;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -45,7 +45,7 @@ public class InitDatabase {
             user1.setAdminRole(false);
 
             Car car = new Car();
-            car.setName("Car");
+            car.setName("CarRepository");
             car.setInfo("This is my car " + car.getName());
 
             Car car1 = new Car();
@@ -61,21 +61,25 @@ public class InitDatabase {
             Track track = new Track();
             track.setName("Track");
             track.setMaxCompanions(4);
+            track.setFreePlaces(track.getMaxCompanions());
             track.setStartLocation("start");
             track.setStopLocation("stop");
             Track track1 = new Track();
             track1.setName("Track1");
             track1.setMaxCompanions(2);
+            track.setFreePlaces(track1.getMaxCompanions());
             track1.setStartLocation("start");
             track1.setStopLocation("stop");
             Track track2 = new Track();
             track2.setName("Track2");
             track2.setMaxCompanions(3);
+            track2.setFreePlaces(track2.getMaxCompanions());
             track2.setStartLocation("start2");
             track2.setStopLocation("stop2");
             Track track3 = new Track();
             track3.setName("Track3");
             track3.setMaxCompanions(2);
+            track3.setFreePlaces(track3.getMaxCompanions());
             track3.setStartLocation("start3");
             track3.setStopLocation("stop3");
 
