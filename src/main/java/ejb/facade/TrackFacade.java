@@ -52,4 +52,13 @@ public class TrackFacade extends AbstractDBObjectFacade {
             return null;
         }
     }
+
+    public Track getTrackByID(int trackID) {
+        try {
+            return (Track) em.createQuery("select t from Track t where t.id = :id and t.deleted is null")
+                    .setParameter("id", trackID).getSingleResult();
+        } catch (NoResultException nrEx) {
+            return null;
+        }
+    }
 }
