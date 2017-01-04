@@ -27,6 +27,7 @@ public abstract class AbstractDBObjectFacade implements Serializable {
     public void delete(AbstractDBObject dbObject) {
         log.info(dbObject + "Delete");
         dbObject.setDeleted(new Date());
+        dbObject.setName(dbObject.getName() + "_d");
         saveOrUpdate(dbObject);
     }
 

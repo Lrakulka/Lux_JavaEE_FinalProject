@@ -19,7 +19,7 @@ public class TrackInfo {
 
     public TrackInfo(Track track) {
         this.name = track.getName();
-        this.owner = track.getOwner().getUsername();
+        this.owner = track.getOwner().getName();
         this.startLocation = track.getStartLocation();
         this.stopLocation = track.getStopLocation();
         this.maxCompanions = track.getMaxCompanions();

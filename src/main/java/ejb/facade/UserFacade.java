@@ -23,7 +23,7 @@ public class UserFacade extends AbstractDBObjectFacade {
 
     public User findUserByUsername(String username) {
         try {
-            return (User) em.createQuery("select u from User u where u.username = :username and u.deleted is null")
+            return (User) em.createQuery("select u from User u where u.name = :username and u.deleted is null")
                             .setParameter("username", username).getSingleResult();
         } catch (NoResultException nrEx) {
             return null;

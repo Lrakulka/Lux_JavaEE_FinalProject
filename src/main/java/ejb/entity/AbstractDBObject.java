@@ -18,6 +18,7 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class AbstractDBObject implements Serializable {
     private Long id;
+    private String name;
     //used for optimistic lock exceptions
     private Date created;
     //never delete a record, just 'flag' it. Yep, you're right.
@@ -33,6 +34,15 @@ public abstract class AbstractDBObject implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Column(name = "name", unique=true)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Column(name = "created")
@@ -86,11 +96,12 @@ public abstract class AbstractDBObject implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractDBObject)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         AbstractDBObject that = (AbstractDBObject) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (created != null ? !created.equals(that.created) : that.created != null) return false;
         return deleted != null ? deleted.equals(that.deleted) : that.deleted == null;
     }
@@ -98,6 +109,7 @@ public abstract class AbstractDBObject implements Serializable {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;

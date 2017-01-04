@@ -8,7 +8,6 @@ import java.util.List;
  */
 @Entity
 public class Track extends AbstractDBObject {
-    private String name;
     private User owner;
     private String startLocation;
     private String stopLocation;
@@ -25,17 +24,7 @@ public class Track extends AbstractDBObject {
         this.freePlaces = freePlaces;
     }
 
-    @Column(name = "name", unique=true)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
-            CascadeType.DETACH, CascadeType.REFRESH}, fetch= FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER)
     public User getOwner() {
         return owner;
     }
@@ -71,8 +60,7 @@ public class Track extends AbstractDBObject {
         this.maxCompanions = maxCompanions;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
-            CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     public List<User> getCompanions() {
         return companions;
     }
@@ -89,19 +77,21 @@ public class Track extends AbstractDBObject {
 
         Track track = (Track) o;
 
-        if (!name.equals(track.name)) return false;
-        if (!startLocation.equals(track.startLocation)) return false;
-        if (!stopLocation.equals(track.stopLocation)) return false;
-        return maxCompanions.equals(track.maxCompanions);
+        if (startLocation != null ? !startLocation.equals(track.startLocation) : track.startLocation != null)
+            return false;
+        if (stopLocation != null ? !stopLocation.equals(track.stopLocation) : track.stopLocation != null) return false;
+        if (maxCompanions != null ? !maxCompanions.equals(track.maxCompanions) : track.maxCompanions != null)
+            return false;
+        return freePlaces != null ? freePlaces.equals(track.freePlaces) : track.freePlaces == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + startLocation.hashCode();
-        result = 31 * result + stopLocation.hashCode();
-        result = 31 * result + maxCompanions.hashCode();
+        result = 31 * result + (startLocation != null ? startLocation.hashCode() : 0);
+        result = 31 * result + (stopLocation != null ? stopLocation.hashCode() : 0);
+        result = 31 * result + (maxCompanions != null ? maxCompanions.hashCode() : 0);
+        result = 31 * result + (freePlaces != null ? freePlaces.hashCode() : 0);
         return result;
     }
 }

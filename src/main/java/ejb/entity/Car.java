@@ -7,21 +7,10 @@ import javax.persistence.*;
  */
 @Entity
 public class Car extends AbstractDBObject {
-    private String name;
     private User owner;
     private String info;
 
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
-            CascadeType.DETACH, CascadeType.REFRESH}, fetch= FetchType.EAGER)
+    @OneToOne(fetch= FetchType.EAGER)
     public User getOwner() {
         return owner;
     }
@@ -47,14 +36,12 @@ public class Car extends AbstractDBObject {
 
         Car car = (Car) o;
 
-        if (!name.equals(car.name)) return false;
         return info != null ? info.equals(car.info) : car.info == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + name.hashCode();
         result = 31 * result + (info != null ? info.hashCode() : 0);
         return result;
     }

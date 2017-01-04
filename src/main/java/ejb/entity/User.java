@@ -9,15 +9,13 @@ import java.util.List;
  */
 @Entity
 public class User extends AbstractDBObject {
-    private String username;
     private String password;
     private boolean adminRole;
     private Car car;
     private List<Track> tracks;
     private List<Track> reservedTracks;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
-            CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "companions", fetch=FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "companions", fetch=FetchType.EAGER)
     public List<Track> getReservedTracks() {
         return reservedTracks;
     }
@@ -26,8 +24,7 @@ public class User extends AbstractDBObject {
         this.reservedTracks = reservedTracks;
     }
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
-            CascadeType.DETACH, CascadeType.REFRESH}, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     public List<Track> getTracks() {
         return tracks;
     }
@@ -36,23 +33,13 @@ public class User extends AbstractDBObject {
         this.tracks = tracks;
     }
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
-            CascadeType.DETACH, CascadeType.REFRESH}, fetch=FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     public Car getCar() {
         return car;
     }
 
     public void setCar(Car car) {
         this.car = car;
-    }
-
-    @Column(name = "username", unique=true)
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Column(name = "password")
@@ -82,15 +69,13 @@ public class User extends AbstractDBObject {
         User user = (User) o;
 
         if (adminRole != user.adminRole) return false;
-        if (!username.equals(user.username)) return false;
-        return password.equals(user.password);
+        return password != null ? password.equals(user.password) : user.password == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + username.hashCode();
-        result = 31 * result + password.hashCode();
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (adminRole ? 1 : 0);
         return result;
     }

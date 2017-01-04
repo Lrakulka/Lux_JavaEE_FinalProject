@@ -10,7 +10,7 @@
             <h:commandLink value="Make a login" action="/login.jsf?faces-redirect=true" rendered="#{not sessionData.loggedIn}"/>
 
             <h:panelGrid columns="1" rendered="#{sessionData.loggedIn}">
-                <h:outputLabel value="Hello #{sessionData.loggedUser.username}, you are logged in :-)"/>
+                <h:outputLabel value="Hello #{sessionData.loggedUser.name}, you are logged in :-)"/>
                 <h:commandLink value="make your comments" action="/userCommentCrud?faces-redirect=true"/>
                 <h:commandLink value="make your bookmarks" action="/userBookmarkCrud?faces-redirect=true"/>
             </h:panelGrid>

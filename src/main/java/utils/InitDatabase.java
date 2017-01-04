@@ -28,19 +28,19 @@ public class InitDatabase {
 
         if (userList.size() == 0) {
             User adminUser = new User();
-            adminUser.setUsername("admin");
+            adminUser.setName("admin");
             adminUser.setPassword("admin1");
             adminUser.setAdminRole(true);
             User adminUser1 = new User();
-            adminUser1.setUsername("admin1");
+            adminUser1.setName("admin1");
             adminUser1.setPassword("admin1");
             adminUser1.setAdminRole(true);
             User user = new User();
-            user.setUsername("user");
+            user.setName("user");
             user.setPassword("user1");
             user.setAdminRole(false);
             User user1 = new User();
-            user1.setUsername("user1");
+            user1.setName("user1");
             user1.setPassword("user1");
             user1.setAdminRole(false);
 
