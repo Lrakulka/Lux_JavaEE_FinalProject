@@ -67,7 +67,7 @@ public class InitDatabase {
             Track track1 = new Track();
             track1.setName("Track1");
             track1.setMaxCompanions(2);
-            track.setFreePlaces(track1.getMaxCompanions());
+            track1.setFreePlaces(track1.getMaxCompanions());
             track1.setStartLocation("start");
             track1.setStopLocation("stop");
             Track track2 = new Track();

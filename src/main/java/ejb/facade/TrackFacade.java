@@ -5,6 +5,7 @@ import ejb.entity.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
@@ -15,14 +16,22 @@ import java.util.List;
 public class TrackFacade extends AbstractDBObjectFacade {
 
     public List<Track> getAll() {
-        return em.createQuery("select t from Track t where t.deleted is null "
-                + "and t.freePlaces > 0").getResultList();
+        try {
+            return em.createQuery("select t from Track t where t.deleted is null "
+                    + "and t.freePlaces > 0").getResultList();
+        } catch (NoResultException nrEx) {
+            return null;
+        }
     }
 
     public List<Track> getTrackByDestination(String start, String stop){
-        return em.createQuery("select t from Track t where (t.startLocation = '"
-                + start + "' and t.stopLocation = '"+ stop +"') "
-                + "and t.deleted is null and t.freePlaces > 0").getResultList();
+        try {
+            return em.createQuery("select t from Track t where t.startLocation =:start " +
+                    "and  t.stopLocation = :stop and t.deleted is null and t.freePlaces > 0")
+                    .setParameter("start", start).setParameter("stop", stop).getResultList();
+        } catch (NoResultException nrEx) {
+            return null;
+        }
     }
 
     public List<Track> getUserTracks(User user) {
@@ -33,5 +42,14 @@ public class TrackFacade extends AbstractDBObjectFacade {
     public List<Track> getUserReservedTracks(User user) {
         // I use eager fetch
         return user.getReservedTracks();
+    }
+
+    public Track getTrackByName(String trackName) {
+        try {
+            return (Track) em.createQuery("select t from Track t where t.name = :name and t.deleted is null")
+                    .setParameter("name", trackName).getSingleResult();
+        } catch (NoResultException nrEx) {
+            return null;
+        }
     }
 }

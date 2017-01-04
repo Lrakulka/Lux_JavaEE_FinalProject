@@ -14,7 +14,11 @@ import java.util.List;
 @Stateless
 public class UserFacade extends AbstractDBObjectFacade {
     public List<User> getAll() {
-        return em.createQuery("select u from User u where u.deleted is null").getResultList();
+        try {
+            return em.createQuery("select u from User u where u.deleted is null").getResultList();
+        } catch (NoResultException nrEx) {
+            return null;
+        }
     }
 
     public User findUserByUsername(String username) {

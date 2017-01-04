@@ -25,7 +25,7 @@ public class Track extends AbstractDBObject {
         this.freePlaces = freePlaces;
     }
 
-    @Column(name = "name")
+    @Column(name = "name", unique=true)
     public String getName() {
         return name;
     }
@@ -70,7 +70,8 @@ public class Track extends AbstractDBObject {
         this.maxCompanions = maxCompanions;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
+            CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     public List<User> getCompanions() {
         return companions;
     }

@@ -1,9 +1,9 @@
 package ws.rest;
 
 import ejb.entity.Track;
-import ejb.entity.User;
-import ejb.facade.TrackFacade;
-import ejb.facade.UserFacade;
+import jsf.bean.action.TrackAction;
+import jsf.bean.model.SessionData;
+import jsf.bean.model.dto.TrackInfo;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ import java.util.List;
 @Path("/tracks")
 public class TrackRestService {
     @Inject
-    private TrackFacade trackFacade;
-
+    private SessionData sessionData;
+    @Inject
+    private TrackAction trackAction;
 
     /*
     http://localhost:8080/Lux_JavaEE_FinalProject/rs/tracks/search
@@ -28,18 +30,30 @@ public class TrackRestService {
     @GET
     @Path("/search")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Track> getTracks(@QueryParam("start") String start,
+    public List<TrackInfo> getTracks(@QueryParam("start") String start,
                                  @QueryParam("stop") String stop) {
-        return trackFacade.getTrackByDestination(start, stop);
+        List<Track> tracks = trackAction.getTrackByDestination(start, stop);
+        List<TrackInfo> tracksInfo = new ArrayList<TrackInfo>();
+        for (Track track : tracks) {
+            tracksInfo.add(new TrackInfo(track));
+        }
+        return tracksInfo;
     }
 
     /*
-    http://localhost:8080/tp4/rs/user/count
+    http://localhost:8080/Lux_JavaEE_FinalProject/rs/tracks/reserv
      */
     @GET
     @Path("/reserv")
     @Produces(MediaType.TEXT_PLAIN)
-    public int getUsersCount() {
-        return trackFacade.getAll().size();
+    public String getReservation(@QueryParam("track") String trackName) {
+        if (!sessionData.isLoggedIn()) {
+            return "You need to login first";
+        }
+        if (trackAction.reserv(sessionData.getLoggedUser(), trackName)) {
+            return "Reserved";
+        } else {
+            return "Not reserved";
+        }
     }
 }

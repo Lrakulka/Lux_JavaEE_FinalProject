@@ -16,7 +16,8 @@ public class User extends AbstractDBObject {
     private List<Track> tracks;
     private List<Track> reservedTracks;
 
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy = "companions")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
+            CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "companions", fetch=FetchType.EAGER)
     public List<Track> getReservedTracks() {
         return reservedTracks;
     }
@@ -43,7 +44,7 @@ public class User extends AbstractDBObject {
         this.car = car;
     }
 
-    @Column(name = "username")
+    @Column(name = "username", unique=true)
     public String getUsername() {
         return username;
     }
@@ -71,25 +72,24 @@ public class User extends AbstractDBObject {
     }
 
     @Override
-       public boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
         User user = (User) o;
 
         if (adminRole != user.adminRole) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        return password != null ? password.equals(user.password) : user.password == null;
+        if (!username.equals(user.username)) return false;
+        return password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + username.hashCode();
+        result = 31 * result + password.hashCode();
         result = 31 * result + (adminRole ? 1 : 0);
         return result;
     }
-
 }
