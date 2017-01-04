@@ -102,7 +102,6 @@ public abstract class AbstractDBObject implements Serializable {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (created != null ? !created.equals(that.created) : that.created != null) return false;
         return deleted != null ? deleted.equals(that.deleted) : that.deleted == null;
     }
 
@@ -110,7 +109,6 @@ public abstract class AbstractDBObject implements Serializable {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;
     }

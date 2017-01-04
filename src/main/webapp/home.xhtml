@@ -2,18 +2,19 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="template.xhtml">
     <ui:define name="content">
         <h:form>
-            <h:commandLink value="Make a login" action="/login.jsf?faces-redirect=true" rendered="#{not sessionData.loggedIn}"/>
-
-            <h:panelGrid columns="1" rendered="#{sessionData.loggedIn}">
-                <h:outputLabel value="Hello #{sessionData.loggedUser.name}, you are logged in :-)"/>
-                <h:commandLink value="make your comments" action="/userCommentCrud?faces-redirect=true"/>
-                <h:commandLink value="make your bookmarks" action="/userBookmarkCrud?faces-redirect=true"/>
-            </h:panelGrid>
+            <h:form style="margin-top: 30px" rendered="#{sessionData.loggedIn}">
+                <h:panelGrid columns="3">
+                    <p:commandButton value="My car" action="/user/myCarCrud.jsf?faces-redirect=true"/>
+                    <p:commandButton value="My tracks" action="/user/myTrackCrud.jsf?faces-redirect=true"/>
+                    <p:commandButton value="Tracks" action="/trackCrud.jsf?faces-redirect=true"/>
+                </h:panelGrid>
+            </h:form>
         </h:form>
     </ui:define>
 </ui:composition>

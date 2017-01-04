@@ -24,6 +24,23 @@ public class TrackFacade extends AbstractDBObjectFacade {
         }
     }
 
+    public List<Track> getAll(User loggedUser) {
+        try {
+            List<Track> tracks = em.createQuery("select t from Track t where t.deleted is null "
+                    + "and t.freePlaces > 0").getResultList();
+            if (loggedUser != null) {
+                for (Track track : loggedUser.getReservedTracks()) {
+                    if (!tracks.contains(track)) {
+                        tracks.add(track);
+                    }
+                }
+            }
+            return tracks;
+        } catch (NoResultException nrEx) {
+            return null;
+        }
+    }
+
     public List<Track> getTrackByDestination(String start, String stop){
         try {
             return em.createQuery("select t from Track t where t.startLocation =:start " +

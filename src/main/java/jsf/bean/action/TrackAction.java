@@ -24,8 +24,32 @@ public class TrackAction {
         return trackFacade.getTrackByDestination(start, stop);
     }
 
-    public boolean reserv(User loggedUser, String trackName) {
-        Track track = trackFacade.getTrackByName(trackName);
+    public boolean isOwner (User loggedUser, Track track) {
+        return track.getOwner().equals(loggedUser);
+    }
+
+    public boolean isReserved(User loggedUser, Track track) {
+        return track.getCompanions().contains(loggedUser);
+    }
+
+    public boolean unReserv(User loggedUser, Track track) {
+        if (track == null || loggedUser == null
+                || track.getOwner().equals(loggedUser)
+                || !track.getCompanions().contains(loggedUser)) {
+            return false;
+        }
+        track.setFreePlaces(track.getFreePlaces() + 1);
+        List<User> companions = track.getCompanions();
+        companions.remove(loggedUser);
+        track.setCompanions(companions);
+        List<Track> tracks = loggedUser.getReservedTracks();
+        tracks.remove(track);
+        loggedUser.setReservedTracks(tracks);
+        trackFacade.saveOrUpdate(track);
+        return true;
+    }
+
+    public boolean reserv(User loggedUser, Track track) {
         if (track == null || loggedUser == null
                 || track.getOwner().equals(loggedUser)
                 || track.getCompanions().contains(loggedUser)
@@ -41,5 +65,10 @@ public class TrackAction {
         loggedUser.setReservedTracks(tracks);
         trackFacade.saveOrUpdate(track);
         return true;
+    }
+
+    public boolean reserv(User loggedUser, String trackName) {
+        Track track = trackFacade.getTrackByName(trackName);
+        return reserv(loggedUser, track);
     }
 }
