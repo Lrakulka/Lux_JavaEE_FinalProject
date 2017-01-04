@@ -20,11 +20,13 @@
                                      action="#{(trackAction.reserv(sessionData.loggedUser, track))}"
                                      rendered="#{not trackAction.isReserved(sessionData.loggedUser, track) and
                                      (not trackAction.isOwner(sessionData.loggedUser, track))}"
+                                     update="@(form)"
                                      />
                     <p:commandButton icon="ui-icon-trash" title="Unreserv"
                                      action="#{trackAction.unReserv(sessionData.loggedUser, track)}"
                                      rendered="#{trackAction.isReserved(sessionData.loggedUser, track) and
                                      (not trackAction.isOwner(sessionData.loggedUser, track))}"
+                                     update="@(form)"
                                      />
                 </p:column>
                 <p:column headerText="Track name" sortBy="#{track.name}" filterBy="#{track.name}">
