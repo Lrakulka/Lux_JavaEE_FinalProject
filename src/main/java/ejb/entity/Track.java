@@ -34,7 +34,8 @@ public class Track extends AbstractDBObject {
         this.name = name;
     }
 
-    @ManyToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
+            CascadeType.DETACH, CascadeType.REFRESH}, fetch= FetchType.EAGER)
     public User getOwner() {
         return owner;
     }

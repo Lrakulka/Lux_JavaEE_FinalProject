@@ -26,7 +26,8 @@ public class User extends AbstractDBObject {
         this.reservedTracks = reservedTracks;
     }
 
-    @OneToMany(cascade= CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
+            CascadeType.DETACH, CascadeType.REFRESH}, fetch=FetchType.EAGER)
     public List<Track> getTracks() {
         return tracks;
     }
@@ -35,7 +36,8 @@ public class User extends AbstractDBObject {
         this.tracks = tracks;
     }
 
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
+            CascadeType.DETACH, CascadeType.REFRESH}, fetch=FetchType.EAGER)
     public Car getCar() {
         return car;
     }

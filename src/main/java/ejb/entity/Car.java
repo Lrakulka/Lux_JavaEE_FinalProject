@@ -20,7 +20,8 @@ public class Car extends AbstractDBObject {
         this.name = name;
     }
 
-    @OneToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE,
+            CascadeType.DETACH, CascadeType.REFRESH}, fetch= FetchType.EAGER)
     public User getOwner() {
         return owner;
     }
