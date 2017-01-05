@@ -10,7 +10,7 @@ public class Car extends AbstractDBObject {
     private User owner;
     private String info;
 
-    @OneToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.EAGER)
     public User getOwner() {
         return owner;
     }

@@ -27,14 +27,7 @@ public class CarCrudBean extends AbstractDBObjectCrudBean<Car>  {
     @Override
     public String doSaveEdit() {
         entity.setOwner(sessionData.getLoggedUser());
-        sessionData.getLoggedUser().setCar(entity);
         return super.doSaveEdit();
-    }
-
-    @Override
-    public String doDelete() {
-        sessionData.getLoggedUser().setCar(null);
-        return super.doDelete();
     }
 
     @Override

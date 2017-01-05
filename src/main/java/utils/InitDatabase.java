@@ -44,17 +44,17 @@ public class InitDatabase {
             user1.setPassword("user1");
             user1.setAdminRole(false);
 
-            Car car = new Car();
+            final Car car = new Car();
             car.setName("CarRepository");
             car.setInfo("This is my car " + car.getName());
 
-            Car car1 = new Car();
+            final Car car1 = new Car();
             car1.setName("Car1");
             car1.setInfo("This is my car " + car1.getName());
-            Car car2 = new Car();
+            final Car car2 = new Car();
             car2.setName("Car2");
             car2.setInfo("This is my car " + car2.getName());
-            Car car3 = new Car();
+            final Car car3 = new Car();
             car3.setName("Car3");
             car3.setInfo("This is my car " + car3.getName());
 
@@ -83,10 +83,10 @@ public class InitDatabase {
             track3.setStartLocation("start3");
             track3.setStopLocation("stop3");
 
-            adminUser.setCar(car);
-            adminUser1.setCar(car1);
-            user.setCar(car2);
-            user1.setCar(car3);
+            adminUser.setCars(new ArrayList<Car>() { {add(car);} });
+            adminUser1.setCars(new ArrayList<Car>() { {add(car1);} });
+            user.setCars(new ArrayList<Car>() { {add(car2);} });
+            user1.setCars(new ArrayList<Car>() { {add(car3);} });
             car.setOwner(adminUser);
             car1.setOwner(adminUser1);
             car2.setOwner(user);

@@ -11,7 +11,7 @@ import java.util.List;
 public class User extends AbstractDBObject {
     private String password;
     private boolean adminRole;
-    private Car car;
+    private List<Car> cars;
     private List<Track> tracks;
     private List<Track> reservedTracks;
 
@@ -33,13 +33,13 @@ public class User extends AbstractDBObject {
         this.tracks = tracks;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    public Car getCar() {
-        return car;
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 
     @Column(name = "password")
