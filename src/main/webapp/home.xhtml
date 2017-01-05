@@ -9,12 +9,22 @@
     <ui:define name="content">
         <h:form>
             <h:form style="margin-top: 30px" rendered="#{sessionData.loggedIn}">
-                <h:panelGrid columns="3">
+                <h:panelGrid columns="5">
                     <p:commandButton icon="ui-icon-image" title="My tracks" value="My tracks" action="/user/myTrackCrud.jsf?faces-redirect=true"/>
                     <p:commandButton icon="ui-icon-contract" value="Tracks" title="Tracks" action="/track.jsf?faces-redirect=true"/>
-                    <p:commandButton icon="ui-icon-cart" value="My car" title="My car"
-                                     action="#{carCrudBean.startEditEntity(sessionData.loggedUser.car.myClone)}"
-                                     update="popupCar" oncomplete="PF('popupCar').show()"/>
+
+                    <p:commandButton icon="ui-icon-plus" value="Create My car" title="Create My car"
+                                     action="#{carCrudBean.startNewEntity}"
+                                     update="popupCar" oncomplete="PF('popupCar').show()"
+                                     rendered="#{empty carFacade.getCar(sessionData.loggedUser)}"/>
+                    <p:commandButton icon="ui-icon-pencil" value="Edit My car" title="Edit My car"
+                                     action="#{carCrudBean.startEditEntity(carFacade.getCar(sessionData.loggedUser).myClone)}"
+                                     update="popupCar" oncomplete="PF('popupCar').show()"
+                                     rendered="#{not empty carFacade.getCar(sessionData.loggedUser)}" />
+                    <p:commandButton icon="ui-icon-trash" value="Delete My car" title="Delete My car"
+                                     action="#{carCrudBean.startDelete(carFacade.getCar(sessionData.loggedUser))}"
+                                     update="popupCar" oncomplete="PF('popupCar').show()"
+                                     rendered="#{not empty carFacade.getCar(sessionData.loggedUser)}" />
                 </h:panelGrid>
             </h:form>
         </h:form>

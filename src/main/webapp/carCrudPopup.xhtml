@@ -8,48 +8,43 @@
         xmlns:p="http://primefaces.org/ui">
 
     <p:dialog id="popupCar" widgetVar="popupCar" modal="true" resizable="false"
-              header="#{carCrudBean.readOnly?'Adjust car...':empty carCrudBean.entity.created?'Add...':'Edit..'}">
+              header="#{carCrudBean.readOnly?'Delete car...':empty carCrudBean.entity.created?'Add...':'Edit..'}">
         <p:ajax form="formPopupCar" event="close"
                 listener="#{carCrudBean.endConversation}" global="false"/>
         <h:form id="formPopupCar">
            <p:outputPanel style="text-align:center;" rendered="#{sessionData.loggedIn}">
-                <p:panelGrid columns="3" rendered="#{not empty userCrudBean.entity}">
-                    <p:outputLabel for="itUsername" value="Username:"/>
-                    <p:inputText id="itUsername" value="#{userCrudBean.entity.name}" required="true"
-                                   disabled="#{userCrudBean.readOnly}"/>
-                    <p:message for="itUsername"/>
+                <p:panelGrid columns="3" rendered="#{not empty carCrudBean.entity}">
+                    <p:outputLabel for="itCarname" value="Carname:"/>
+                    <p:inputText id="itCarname" value="#{carCrudBean.entity.name}" required="true"
+                                   disabled="#{carCrudBean.readOnly}"/>
+                    <p:message for="itCarname"/>
 
-                    <p:outputLabel for="itPassword" value="Password:"/>
-                    <p:inputText id="itPassword" value="#{userCrudBean.entity.password}" required="true"
-                                 disabled="#{userCrudBean.readOnly}"/>
-                    <p:message for="itPassword"/>
-
-                    <p:outputLabel for="sbcRole" value="AdminRole:"/>
-                    <p:selectBooleanCheckbox id="sbcRole" value="#{userCrudBean.entity.adminRole}"
-                                 disabled="#{userCrudBean.readOnly}"/>
-                    <p:message for="sbcRole"/>
+                    <p:outputLabel for="itInfo" value="Info:"/>
+                    <p:inputText id="itInfo" value="#{carCrudBean.entity.info}" required="true"
+                                 disabled="#{carCrudBean.readOnly}"/>
+                    <p:message for="itInfo"/>
 
                     <p:commandButton value="Record" icon="ui-icon-disk"
-                                     rendered="#{not userCrudBean.readOnly}"
-                                     action="#{userCrudBean.doSaveEdit}"
+                                     rendered="#{not carCrudBean.readOnly}"
+                                     action="#{carCrudBean.doSaveEdit}"
                                      update="@(form)"
-                                     oncomplete="if(!args.validationFailed) { PF('popupUser').hide(); PF('tblUser').filter(); } return false;">
+                                     oncomplete="if(!args.validationFailed) { PF('popupCar').hide(); } return false;">
                         <!--suppress ELValidationInJSP -->
                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                     </p:commandButton>
                     <p:commandButton
                                      value="Remove" icon="ui-icon-trash"
-                                     rendered="#{userCrudBean.readOnly}"
-                                     action="#{userCrudBean.doDelete}"
+                                     rendered="#{carCrudBean.readOnly}"
+                                     action="#{carCrudBean.doDelete}"
                                      update="@(form)"
-                                     oncomplete="PF('popupUser').hide(); PF('tblUser').filter(); return false;">
+                                     oncomplete="PF('popupCar').hide(); return false;">
                         <!--suppress ELValidationInJSP -->
                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                     </p:commandButton>
                     <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true"
-                                     action="#{userCrudBean.doCancel}"
+                                     action="#{carCrudBean.doCancel}"
                                      update="@(form)"
-                                     oncomplete="PF('popupUser').hide(); return false;">
+                                     oncomplete="PF('popupCar').hide(); return false;">
                         <!--suppress ELValidationInJSP -->
                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                     </p:commandButton>
