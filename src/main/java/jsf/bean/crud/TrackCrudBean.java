@@ -42,7 +42,8 @@ public class TrackCrudBean extends AbstractDBObjectCrudBean<Track>  {
     public String doDelete() {
         Iterator<User> it = entity.getCompanions().iterator();
         while (it.hasNext()) {
-            trackAction.unReserv(it.next(), entity);
+            User user = it.next();
+            user.getReservedTracks().remove(entity);
         }
         return super.doDelete();
     }
