@@ -25,6 +25,7 @@ public class TrackRestService {
     private TrackAction trackAction;
 
     /*
+    The track search
     http://localhost:8080/Lux_JavaEE_FinalProject/rs/tracks/search
      */
     @GET
@@ -41,6 +42,7 @@ public class TrackRestService {
     }
 
     /*
+    The track reservation
     http://localhost:8080/Lux_JavaEE_FinalProject/rs/tracks/reserv
      */
     @GET

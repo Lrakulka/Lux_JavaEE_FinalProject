@@ -7,6 +7,7 @@ import javax.enterprise.inject.Model;
 
 /**
  * Created by Olecsandr Borysov on 04.01.17.
+ * I use this class to form response in Rest-Service
  */
 
 public class TrackInfo {

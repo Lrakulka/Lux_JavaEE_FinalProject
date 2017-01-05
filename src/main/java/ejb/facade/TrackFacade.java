@@ -19,6 +19,7 @@ public class TrackFacade extends AbstractDBObjectFacade {
     @Override
     public AbstractDBObject saveOrUpdate(AbstractDBObject dbObject) {
         Track track = (Track) dbObject;
+        // Update companions if number of free space was decreased
         if (track != null && track.getCompanions() != null
                 && track.getMaxCompanions() - track.getCompanions().size() != track.getFreePlaces()) {
             for (int i = track.getCompanions().size() - 1;

@@ -50,19 +50,16 @@ public class TrackAction {
     }
 
     public boolean reserv(User loggedUser, Track track) {
+        // Check if reservation is possible
         if (track == null || loggedUser == null
                 || track.getOwner().equals(loggedUser)
                 || track.getCompanions().contains(loggedUser)
                 || track.getFreePlaces() == 0) {
             return false;
         }
-        track.setFreePlaces(track.getFreePlaces() - 1);
-        List<User> companions = track.getCompanions();
-        companions.add(loggedUser);
-        track.setCompanions(companions);
-        List<Track> tracks = loggedUser.getReservedTracks();
-        tracks.add(track);
-        loggedUser.setReservedTracks(tracks);
+        track.getCompanions().add(loggedUser);
+        loggedUser.getReservedTracks().add(track);
+        track.setFreePlaces(track.getMaxCompanions() - track.getCompanions().size());
         trackFacade.saveOrUpdate(track);
         return true;
     }

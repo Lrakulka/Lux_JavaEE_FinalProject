@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by Olecsandr Borysov on 03.01.17.
+ * Start initialization of database
  */
 @Singleton
 @Startup
@@ -66,19 +67,19 @@ public class InitDatabase {
             track.setStopLocation("stop");
             Track track1 = new Track();
             track1.setName("Track1");
-            track1.setMaxCompanions(2);
+            track1.setMaxCompanions(4);
             track1.setFreePlaces(track1.getMaxCompanions());
             track1.setStartLocation("start");
             track1.setStopLocation("stop");
             Track track2 = new Track();
             track2.setName("Track2");
-            track2.setMaxCompanions(3);
+            track2.setMaxCompanions(5);
             track2.setFreePlaces(track2.getMaxCompanions());
             track2.setStartLocation("start2");
             track2.setStopLocation("stop2");
             Track track3 = new Track();
             track3.setName("Track3");
-            track3.setMaxCompanions(2);
+            track3.setMaxCompanions(6);
             track3.setFreePlaces(track3.getMaxCompanions());
             track3.setStartLocation("start3");
             track3.setStopLocation("stop3");
@@ -108,15 +109,6 @@ public class InitDatabase {
             user.setTracks(ownerTracks);
             track3.setOwner(user);
 
-            /*List<User> companions = new ArrayList<User>();
-            companions.add(user1);
-            track.setCompanions(companions);
-            track1.setCompanions(companions);*/
-            /*List<Track> reservedTracks = new ArrayList<Track>();
-            reservedTracks.add(track);
-            reservedTracks.add(track1);
-            user1.setReservedTracks(reservedTracks);*/
-
             em.merge(adminUser);
             em.merge(adminUser1);
             em.merge(user);
@@ -134,7 +126,9 @@ public class InitDatabase {
             reservedTracks.add(t2);
             u.setReservedTracks(reservedTracks);
             t1.setCompanions(companions);
+            t1.setFreePlaces(t1.getMaxCompanions() - t1.getCompanions().size());
             t2.setCompanions(companions);
+            t2.setFreePlaces(t2.getMaxCompanions() - t2.getCompanions().size());
             em.merge(u);
         }
     }
