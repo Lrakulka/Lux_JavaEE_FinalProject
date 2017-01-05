@@ -5,7 +5,6 @@
   <artifactId>Lux_JavaEE_FinalProject</artifactId>
   <packaging>war</packaging>
   <version>1.0</version>
-  <packaging>war</packaging>
 
   <dependencies>
     <dependency>
