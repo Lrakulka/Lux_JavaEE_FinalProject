@@ -76,29 +76,10 @@ public class TrackFacade extends AbstractDBObjectFacade {
         }
     }
 
-    public List<Track> getUserTracks(User user) {
-        // I use eager fetch
-        return user.getTracks();
-    }
-
-    public List<Track> getUserReservedTracks(User user) {
-        // I use eager fetch
-        return user.getReservedTracks();
-    }
-
     public Track getTrackByName(String trackName) {
         try {
             return (Track) em.createQuery("select t from Track t where t.name = :name and t.deleted is null")
                     .setParameter("name", trackName).getSingleResult();
-        } catch (NoResultException nrEx) {
-            return null;
-        }
-    }
-
-    public Track getTrackByID(int trackID) {
-        try {
-            return (Track) em.createQuery("select t from Track t where t.id = :id and t.deleted is null")
-                    .setParameter("id", trackID).getSingleResult();
         } catch (NoResultException nrEx) {
             return null;
         }
