@@ -25,10 +25,16 @@
                                      action="#{carCrudBean.startDelete(carFacade.getCar(sessionData.loggedUser))}"
                                      update="popupCar" oncomplete="PF('popupCar').show()"
                                      rendered="#{not empty carFacade.getCar(sessionData.loggedUser)}" />
+
+                    <p:commandButton icon="ui-icon-pencil" value="Edit Account" title="Edit"
+                                     action="#{userCrudBean.startEditEntity(userFacade.findUserByUsername(sessionData.loggedUser.name).myClone)}"
+                                     update="popupUser"
+                                     oncomplete="PF('popupUser').show()"/>
                 </h:panelGrid>
             </h:form>
         </h:form>
         <ui:include src="carCrudPopup.xhtml"/>
+        <ui:include src="userCrudPopup.xhtml"/>
     </ui:define>
 </ui:composition>
 </html>
