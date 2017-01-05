@@ -1,5 +1,6 @@
 package ejb.facade;
 
+import ejb.entity.AbstractDBObject;
 import ejb.entity.Track;
 import ejb.entity.User;
 
@@ -14,6 +15,30 @@ import java.util.List;
 @Named
 @Stateless
 public class TrackFacade extends AbstractDBObjectFacade {
+
+    @Override
+    public AbstractDBObject saveOrUpdate(AbstractDBObject dbObject) {
+        Track track = (Track) dbObject;
+        if (track != null && track.getCompanions() != null
+                && track.getMaxCompanions() - track.getCompanions().size() != track.getFreePlaces()) {
+            for (int i = track.getCompanions().size() - 1;
+                    track.getMaxCompanions() < track.getCompanions().size(); --i) {
+                track.getCompanions().get(i).getReservedTracks().remove(track);
+                track.getCompanions().remove(i);
+            }
+            track.setFreePlaces(track.getMaxCompanions() - track.getCompanions().size());
+        }
+        return super.saveOrUpdate(dbObject);
+    }
+
+    public List<Track> getAllOwner(User owner) {
+        try {
+            return em.createQuery("select t from Track t where t.deleted is null "
+                    + "and t.owner=:owner").setParameter("owner", owner).getResultList();
+        } catch (NoResultException nrEx) {
+            return null;
+        }
+    }
 
     public List<Track> getAll() {
         try {

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--suppress XmlWrongRootElement -->
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog id="popupTrack" widgetVar="popupTrack" modal="true" resizable="false"
+              header="#{trackCrudBean.readOnly?'Delete...':empty trackCrudBean.entity.created?'Add...':'Edit..'}">
+        <p:ajax form="formPopupTrack" event="close"
+                listener="#{trackCrudBean.endConversation}" global="false"/>
+        <h:form id="formPopupTrack">
+            <p:outputPanel style="text-align:center;" rendered="#{sessionData.loggedIn}">
+                <p:panelGrid columns="3" rendered="#{not empty trackCrudBean.entity}">
+                    <p:outputLabel for="itTrackname" value="Trackname:"/>
+                    <p:inputText id="itTrackname" value="#{trackCrudBean.entity.name}" required="true"
+                                 disabled="#{trackCrudBean.readOnly}"/>
+                    <p:message for="itTrackname"/>
+
+                    <p:outputLabel for="itStart" value="Start:"/>
+                    <p:inputText id="itStart" value="#{trackCrudBean.entity.startLocation}" required="true"
+                                 disabled="#{trackCrudBean.readOnly}"/>
+                    <p:message for="itStart"/>
+
+                    <p:outputLabel for="itStop" value="Stop:"/>
+                    <p:inputText id="itStop" value="#{trackCrudBean.entity.stopLocation}" required="true"
+                                 disabled="#{trackCrudBean.readOnly}"/>
+                    <p:message for="itStop"/>
+
+                    <p:outputLabel for="itMaxCompan" value="MaxCompanions:"/>
+                    <p:inputText id="itMaxCompan" value="#{trackCrudBean.entity.maxCompanions}" required="true"
+                                 disabled="#{trackCrudBean.readOnly}"/>
+                    <p:message for="itMaxCompan"/>
+
+                    <p:commandButton value="Record" icon="ui-icon-disk"
+                                     rendered="#{not trackCrudBean.readOnly}"
+                                     action="#{trackCrudBean.doSaveEdit}"
+                                     update="@(form)"
+                                     oncomplete="if(!args.validationFailed) { PF('popupTrack').hide(); PF('tblTrack').filter(); } return false;">
+                        <!--suppress ELValidationInJSP -->
+                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                    </p:commandButton>
+                    <p:commandButton
+                            value="Remove" icon="ui-icon-trash"
+                            rendered="#{trackCrudBean.readOnly}"
+                            action="#{trackCrudBean.doDelete}"
+                            update="@(form)"
+                            oncomplete="PF('popupTrack').hide(); PF('tblTrack').filter(); return false;">
+                        <!--suppress ELValidationInJSP -->
+                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                    </p:commandButton>
+                    <p:commandButton value="Cancel" icon="ui-icon-cancel" immediate="true"
+                                     action="#{trackCrudBean.doCancel}"
+                                     update="@(form)"
+                                     oncomplete="PF('popupTrack').hide(); return false;">
+                        <!--suppress ELValidationInJSP -->
+                        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+                    </p:commandButton>
+                </p:panelGrid>
+                <p:messages/>
+            </p:outputPanel>
+        </h:form>
+    </p:dialog>
+</ui:composition>

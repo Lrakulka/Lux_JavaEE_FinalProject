@@ -7,18 +7,16 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui">
 
-    <p:dialog id="popupTrack" widgetVar="popupTrack" modal="true" resizable="false"
-              header="#{userCrudBean.readOnly?'Delete...':empty userCrudBean.entity.created?'Add...':'Edit..'}">
-        <p:ajax form="formPopupUser" event="close"
-                listener="#{userCrudBean.endConversation}" global="false"/>
-        <h:form id="formPopupUser">
-            <h:commandLink value="Make a login" action="/login.jsf?faces-redirect=true" rendered="#{not sessionData.loggedIn}"/>
-
-            <p:outputPanel style="text-align:center;" rendered="#{sessionData.loggedIn}">
+    <p:dialog id="popupCar" widgetVar="popupCar" modal="true" resizable="false"
+              header="#{carCrudBean.readOnly?'Adjust car...':empty carCrudBean.entity.created?'Add...':'Edit..'}">
+        <p:ajax form="formPopupCar" event="close"
+                listener="#{carCrudBean.endConversation}" global="false"/>
+        <h:form id="formPopupCar">
+           <p:outputPanel style="text-align:center;" rendered="#{sessionData.loggedIn}">
                 <p:panelGrid columns="3" rendered="#{not empty userCrudBean.entity}">
                     <p:outputLabel for="itUsername" value="Username:"/>
                     <p:inputText id="itUsername" value="#{userCrudBean.entity.name}" required="true"
-                                 disabled="#{userCrudBean.readOnly}"/>
+                                   disabled="#{userCrudBean.readOnly}"/>
                     <p:message for="itUsername"/>
 
                     <p:outputLabel for="itPassword" value="Password:"/>
@@ -28,7 +26,7 @@
 
                     <p:outputLabel for="sbcRole" value="AdminRole:"/>
                     <p:selectBooleanCheckbox id="sbcRole" value="#{userCrudBean.entity.adminRole}"
-                                             disabled="#{userCrudBean.readOnly}"/>
+                                 disabled="#{userCrudBean.readOnly}"/>
                     <p:message for="sbcRole"/>
 
                     <p:commandButton value="Record" icon="ui-icon-disk"
@@ -40,11 +38,11 @@
                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                     </p:commandButton>
                     <p:commandButton
-                            value="Remove" icon="ui-icon-trash"
-                            rendered="#{userCrudBean.readOnly}"
-                            action="#{userCrudBean.doDelete}"
-                            update="@(form)"
-                            oncomplete="PF('popupUser').hide(); PF('tblUser').filter(); return false;">
+                                     value="Remove" icon="ui-icon-trash"
+                                     rendered="#{userCrudBean.readOnly}"
+                                     action="#{userCrudBean.doDelete}"
+                                     update="@(form)"
+                                     oncomplete="PF('popupUser').hide(); PF('tblUser').filter(); return false;">
                         <!--suppress ELValidationInJSP -->
                         <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
                     </p:commandButton>

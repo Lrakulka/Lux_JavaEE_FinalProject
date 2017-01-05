@@ -3,7 +3,6 @@ package jsf.bean.crud;
 import ejb.entity.User;
 import ejb.facade.AbstractDBObjectFacade;
 import ejb.facade.UserFacade;
-import jsf.bean.action.LoginAction;
 import jsf.bean.model.SessionData;
 
 import javax.enterprise.context.Conversation;

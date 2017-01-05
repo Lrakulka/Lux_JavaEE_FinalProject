@@ -7,33 +7,30 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-<ui:composition template="template.xhtml">
+<ui:composition template="../template.xhtml">
     <ui:define name="content">
         <h:form id="formTblTrack">
             <p:dataTable id="tblTrack" widgetVar="tblTrack" var="track"
-                         value="#{trackFacade.getAll(sessionData.loggedUser)}" rendered="#{sessionData.loggedIn}">
+                         value="#{trackFacade.getAllOwner(sessionData.loggedUser)}" rendered="#{sessionData.loggedIn}">
                 <f:facet name="header">
                     Tracks
                 </f:facet>
-                <p:column style="width:44px;" exportable="false">
-                    <p:commandButton icon="ui-icon-plus" title="Reserv"
-                                     action="#{(trackAction.reserv(sessionData.loggedUser, track))}"
-                                     rendered="#{not trackAction.isReserved(sessionData.loggedUser, track) and
-                                     (not trackAction.isOwner(sessionData.loggedUser, track))}"
-                                     update="@(form)"
-                                     />
-                    <p:commandButton icon="ui-icon-trash" title="Unreserv"
-                                     action="#{trackAction.unReserv(sessionData.loggedUser, track)}"
-                                     rendered="#{trackAction.isReserved(sessionData.loggedUser, track) and
-                                     (not trackAction.isOwner(sessionData.loggedUser, track))}"
-                                     update="@(form)"
-                                     />
+                <p:column style="width:66px;" exportable="false">
+                    <f:facet name="header">
+                        <p:commandButton icon="ui-icon-plus" title="Add"
+                                         action="#{trackCrudBean.startNewEntity}"
+                                         update="popupTrack" oncomplete="PF('popupTrack').show()"/>
+                    </f:facet>
+                    <p:commandButton icon="ui-icon-pencil" title="Edit"
+                                     action="#{trackCrudBean.startEditEntity(track.myClone)}"
+                                     update="popupTrack" oncomplete="PF('popupTrack').show()"/>
+                    <p:commandButton icon="ui-icon-trash" title="Delete"
+                                     action="#{trackCrudBean.startDelete(track)}"
+                                     update="popupTrack" oncomplete="PF('popupTrack').show()"/>
+
                 </p:column>
                 <p:column headerText="Track name" sortBy="#{track.name}" filterBy="#{track.name}">
                     <h:outputText value="#{track.name}"/>
-                </p:column>
-                <p:column headerText="Track created" sortBy="#{track.created}" filterBy="#{track.created}">
-                    <h:outputText value="#{track.created}"/>
                 </p:column>
                 <p:column headerText="Start location" sortBy="#{track.startLocation}" filterBy="#{track.startLocation}">
                     <h:outputText value="#{track.startLocation}"/>
@@ -51,7 +48,7 @@
                     <h:outputText value="#{track.freePlaces}"/>
                 </p:column>
                 <f:facet name="footer">
-                    Total count: #{fn:length(trackFacade.getAll(sessionData.loggedUser))}
+                    Total count: #{fn:length(trackFacade.getAllOwner(sessionData.loggedUser))}
                 </f:facet>
             </p:dataTable>
         </h:form>

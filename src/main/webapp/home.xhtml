@@ -10,12 +10,15 @@
         <h:form>
             <h:form style="margin-top: 30px" rendered="#{sessionData.loggedIn}">
                 <h:panelGrid columns="3">
-                    <p:commandButton value="My car" action="/user/myCarCrud.jsf?faces-redirect=true"/>
-                    <p:commandButton value="My tracks" action="/user/myTrackCrud.jsf?faces-redirect=true"/>
-                    <p:commandButton value="Tracks" action="/trackCrud.jsf?faces-redirect=true"/>
+                    <p:commandButton icon="ui-icon-image" title="My tracks" value="My tracks" action="/user/myTrackCrud.jsf?faces-redirect=true"/>
+                    <p:commandButton icon="ui-icon-contract" value="Tracks" title="Tracks" action="/track.jsf?faces-redirect=true"/>
+                    <p:commandButton icon="ui-icon-cart" value="My car" title="My car"
+                                     action="#{carCrudBean.startEditEntity(sessionData.loggedUser.car.myClone)}"
+                                     update="popupCar" oncomplete="PF('popupCar').show()"/>
                 </h:panelGrid>
             </h:form>
         </h:form>
+        <ui:include src="carCrudPopup.xhtml"/>
     </ui:define>
 </ui:composition>
 </html>

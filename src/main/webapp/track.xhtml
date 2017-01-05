@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<ui:composition template="template.xhtml">
+    <ui:define name="content">
+        <h:form id="formTblTrack">
+            <p:dataTable id="tblTrack" widgetVar="tblTrack" var="track"
+                         value="#{trackFacade.getAll(sessionData.loggedUser)}" rendered="#{sessionData.loggedIn}">
+                <f:facet name="header">
+                    Tracks
+                </f:facet>
+                <p:column style="width:44px;" exportable="false">
+                    <p:commandButton icon="ui-icon-plus" title="Reserv"
+                                     action="#{(trackAction.reserv(sessionData.loggedUser, track))}"
+                                     rendered="#{not trackAction.isReserved(sessionData.loggedUser, track) and
+                                     (not trackAction.isOwner(sessionData.loggedUser, track))}"
+                                     update="@(form)"
+                                     />
+                    <p:commandButton icon="ui-icon-trash" title="Unreserv"
+                                     action="#{trackAction.unReserv(sessionData.loggedUser, track)}"
+                                     rendered="#{trackAction.isReserved(sessionData.loggedUser, track) and
+                                     (not trackAction.isOwner(sessionData.loggedUser, track))}"
+                                     update="@(form)"
+                                     />
+                </p:column>
+                <p:column headerText="Track name" sortBy="#{track.name}" filterBy="#{track.name}">
+                    <h:outputText value="#{track.name}"/>
+                </p:column>
+                <p:column headerText="Start location" sortBy="#{track.startLocation}" filterBy="#{track.startLocation}">
+                    <h:outputText value="#{track.startLocation}"/>
+                </p:column>
+                <p:column headerText="Stop location" sortBy="#{track.stopLocation}" filterBy="#{track.stopLocation}">
+                    <h:outputText value="#{track.stopLocation}"/>
+                </p:column>
+                <p:column headerText="Track owner" sortBy="#{track.owner.name}" filterBy="#{track.owner.name}">
+                    <h:outputText value="#{track.owner.name}"/>
+                </p:column>
+                <p:column headerText="Max places" sortBy="#{track.maxCompanions}" filterBy="#{track.maxCompanions}">
+                    <h:outputText value="#{track.maxCompanions}"/>
+                </p:column>
+                <p:column headerText="Free places" sortBy="#{track.freePlaces}" filterBy="#{track.freePlaces}">
+                    <h:outputText value="#{track.freePlaces}"/>
+                </p:column>
+                <f:facet name="footer">
+                    Total count: #{fn:length(trackFacade.getAll(sessionData.loggedUser))}
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
